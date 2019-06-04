@@ -10,7 +10,6 @@
         "node-red-contrib-onvif": "0.0.2",
         "node-red-contrib-os": "~0.1.7",
         "node-red-contrib-slack-files": "~0.1.2",
-        "node-red-dashboard": "~2.15.4",
         "node-red-node-ping": "0.0.16"
     }
 }
