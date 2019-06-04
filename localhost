@@ -1,7 +1,7 @@
 
 [localhost:vars]
 ansible_python_interpreter=/usr/bin/python3
-ansible_sudo_pass=xxx
+ansible_sudo_pass=admin
 
 
 [localhost]

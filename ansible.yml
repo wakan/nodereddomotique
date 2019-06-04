@@ -83,3 +83,10 @@
 
         - name: Create database
           command: /usr/bin/influx -execute 'CREATE DATABASE dom'
+
+   
+        - name: Install packages based on package.json.
+          npm:
+                  path: /home/{{ username_on_the_host.stdout }}/.node-red/
+
+
