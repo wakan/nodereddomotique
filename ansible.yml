@@ -41,6 +41,16 @@
                   src: nodered.service
                   dest: /lib/systemd/system/nodered.service
 
+        - name: Copy node-red configuration
+          copy: 
+                  src: "{{ item }}"
+                  dest: /home/{{ username_on_the_host.stdout }}/.node-red/
+                  owner: "{{ username_on_the_host.stdout }}"
+          with_items:
+                - package.json
+                - settings.js
+                - flows.json
+
         - name: Enable & start Node-RED
           systemd:
                   daemon_reload: yes
