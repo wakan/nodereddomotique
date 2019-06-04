@@ -1,0 +1,75 @@
+---
+- hosts: all
+  become: yes
+  tasks:  
+        - name: update upgrade
+          apt:
+                  upgrade: dist
+                  update_cache: yes
+
+        - name: install apt-transport-https
+          apt:
+                  name: apt-transport-https
+
+        - name: Add node key
+          apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key  state=present
+
+        - name: add node repo
+          apt_repository:
+            repo: 'deb https://deb.nodesource.com/node_10.x {{ ansible_distribution_release }} main'
+
+        - name: install nodejs
+          apt:
+                  name: nodejs
+                  
+        - name: install nodered
+          npm:
+                  name: node-red
+                  global: yes
+                  state: present
+
+        - name: get the username running the deploy
+          become: false
+          local_action: command whoami
+          register: username_on_the_host
+
+        - debug: var=username_on_the_host
+
+        - name: Create nodered.service
+          template:
+                  # in /roles/node-red/templates/
+                  src: nodered.service
+                  dest: /lib/systemd/system/nodered.service
+
+        - name: Enable & start Node-RED
+          systemd:
+                  daemon_reload: yes
+                  enabled: yes
+                  state: restarted
+                  name: nodered
+
+        - name: install mosquitto
+          apt:
+                  name: "{{ item }}"
+          with_items:
+                - mosquitto
+                - mosquitto-clients
+
+        - name: Import InfluxDB GPG signing key
+          apt_key: url=https://repos.influxdata.com/influxdb.key state=present
+
+        - name: Add InfluxDB repository
+          apt_repository: repo='deb https://repos.influxdata.com/debian precise stable' state=present
+
+        - name: Install InfluxDB packages
+          apt: name=influxdb state=present
+
+        - name: Start the InfluxDB service
+          service: name=influxdb state=restarted
+          
+        - name: pause 2s
+          pause:
+                  seconds: 2
+
+        - name: Create database
+          command: /usr/bin/influx -execute 'CREATE DATABASE dom'
