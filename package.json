@@ -2,5 +2,15 @@
     "name": "node-red-project",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "private": true
+    "private": true,
+    "dependencies": {
+        "node-red-contrib-broadlink": "~0.2.4",
+        "node-red-contrib-influxdb": "~0.2.2",
+        "node-red-contrib-moment": "~3.0.3",
+        "node-red-contrib-onvif": "0.0.2",
+        "node-red-contrib-os": "~0.1.7",
+        "node-red-contrib-slack-files": "~0.1.2",
+        "node-red-dashboard": "~2.15.4",
+        "node-red-node-ping": "0.0.16"
+    }
 }
