@@ -37,13 +37,12 @@
 
         - name: Create nodered.service
           template:
-                  # in /roles/node-red/templates/
-                  src: nodered.service
+                  src: nodered/nodered.service
                   dest: /lib/systemd/system/nodered.service
 
         - name: Copy node-red configuration
           copy: 
-                  src: "{{ item }}"
+                  src: "nodered/{{ item }}"
                   dest: /home/{{ username_on_the_host.stdout }}/.node-red/
                   owner: "{{ username_on_the_host.stdout }}"
           with_items:
