@@ -1,6 +1,6 @@
 su
 apt update && apt dist-upgrade && apt install sudo
-useradd admininstall
+useradd admininstall --home /home/admininstall
 passwd admininstall
 usermod admininstall -aG sudo
 #logoff root : CRTL-D
