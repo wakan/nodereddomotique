@@ -1,4 +1,4 @@
-su
+su -
 apt update && apt dist-upgrade && apt install sudo
 useradd admininstall --create-home
 passwd admininstall
